@@ -21,4 +21,16 @@ describe('Avatar', () => {
 
         expect(container.firstChild).toHaveClass(variantClass)
       });
+
+  it('should render with an an altText and a given url', () => {
+    const { getByTestId } = render(
+      <Avatar
+        imageURL={"testpPicture.png"}
+        alt={"This is an alt text"}
+        size={"small"} />);
+
+    expect(getByTestId('avatar').getAttribute('alt')).toEqual('This is an alt text');
+    expect(getByTestId('avatar').getAttribute('src')).toEqual('testpPicture.png')
+
+  })
 });
