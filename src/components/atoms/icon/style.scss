@@ -1,0 +1,26 @@
+@import "../../../styles/settings.scss";
+
+.icon-label {
+    align-self: center;
+    color: $lightGray;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.icon {
+    position: relative;
+    left: -100vw;
+
+    &:checked + .icon-label {
+        color: $gold;
+        will-change: font-size;
+        animation: star 1s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+    }
+}
+
+@keyframes star {
+    0%,
+    15% {
+        font-size: 0rem;
+    }
+}

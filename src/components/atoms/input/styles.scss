@@ -1,0 +1,33 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/tools.scss";
+
+.input {
+    outline: none;
+    border: 2px solid $lightGray;
+    width: 100%;
+    font-size: $medium;
+    transition: all 0.2s ease-in;
+    border-radius: 6px;
+    padding: 1.2rem;
+    color: $richBlack;
+    font-family: $lato;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &::placeholder {
+        font-size: $regular;
+        color: $gray;
+        font-family: $lato;
+    }
+
+    &:focus {
+        @include input-focus;
+    }
+
+    &--invalid {
+        @extend .input;
+        @include input-invalid;
+    }
+}

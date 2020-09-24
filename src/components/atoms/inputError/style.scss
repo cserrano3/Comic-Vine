@@ -1,0 +1,11 @@
+@import "../../../styles/settings.scss";
+
+.feedback {
+    font-size: $small;
+
+    &--invalid {
+        @extend .feedback;
+        margin-top: 0.8rem;
+        color: $darkRed;
+    }
+}

@@ -1,0 +1,9 @@
+@import "../../../styles/settings.scss";
+.label {
+    display: block;
+    font-size: $medium;
+    font-weight: $bold;
+    line-height: 1;
+    margin-bottom: 1rem;
+    color: $richBlack;
+}

@@ -1,0 +1,11 @@
+@import "../../../styles/settings.scss";
+
+.aliases {
+    font-size: 1rem;
+    color: $gray;
+
+    &__separator {
+        font-size: $small;
+        color: $gray;
+    }
+}

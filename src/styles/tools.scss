@@ -1,0 +1,9 @@
+@mixin input-focus {
+    border: 2px solid $lightPineGreen;
+    box-shadow: 0 0 3px $mediumPineGreen;
+}
+
+@mixin input-invalid {
+    border: 2px solid $red;
+    box-shadow: 0 0 3px $darkRed;
+}

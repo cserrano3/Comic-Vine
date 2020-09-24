@@ -1,0 +1,24 @@
+@import "../../../styles/settings.scss";
+
+.button {
+    font-size: $medium;
+    font-weight: $bold;
+    color: $white;
+    width: 100px;
+    border-radius: 6px;
+    transition: margin-top 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    background: $mediumPineGreen;
+    border: solid 1px transparent;
+    box-shadow: 0px 4px 0px $darkPineGreen-b;
+
+    &:active {
+        outline: none;
+        transition: margin-top 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+        margin-top: 4px;
+        box-shadow: 0px 0px 0px $darkPineGreen-b;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}

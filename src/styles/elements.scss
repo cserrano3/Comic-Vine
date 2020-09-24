@@ -1,0 +1,44 @@
+@import "./settings.scss";
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+    font-size: 1.6rem;
+    margin: 0;
+    padding: 0;
+    font-family: $lato;
+}
+
+main,
+aside {
+    padding: 0.8rem;
+}
+
+ol,
+ul,
+li {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button {
+    cursor: pointer;
+    margin: 0;
+    padding: 0.8rem;
+}

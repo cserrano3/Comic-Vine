@@ -1,0 +1,1 @@
+export const parseAliases = (aliases: string): Array<string> => aliases?.split(/\n/ig);
