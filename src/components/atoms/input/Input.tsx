@@ -10,25 +10,35 @@ interface Props {
   className?: string;
   placeholder?: string;
   invalid?: boolean;
+  onChange?: (event: React.ChangeEvent) => void,
 }
 
 export default function Input({
   type,
   disabled,
   name,
-  invalid,
+  invalid = false,
   className = '',
-  placeholder = ''
+  placeholder = '',
+  onChange
 }: Props) {
-  const [field, meta] = useField({ name, type });
+
+  const [field] = useField({ name, type });
+
+  const triggerOnChange = (event: React.ChangeEvent) => {
+    field.onChange(event);
+    onChange(event)
+  };
+
   return (
     <input
-      {...field}
+      onChange={triggerOnChange}
+      value={field.value}
       type={type}
       disabled={disabled}
       placeholder={placeholder}
       name={name}
-      className={`input ${invalid &&
-        'input--invalid'} ${className}`} />
+      className={`input ${invalid ?
+        'input--invalid' : ''} ${className}`} />
   );
 }

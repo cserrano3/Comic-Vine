@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-export default function Icon({ name }: Props) {
+export default function IconCheckbox({ name }: Props) {
   const [field] = useField({ name });
   return (
     <>

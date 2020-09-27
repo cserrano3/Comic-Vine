@@ -1,9 +1,9 @@
 import React from 'react';
 import Avatar from '../../atoms/avatar/Avatar';
-import Icon from '../../atoms/icon/Icon';
+import Icon from '../../atoms/iconCheckbox/IconCheckbox';
 import Separator from '../../atoms/separator/Separator';
 import ListItem from '../../atoms/listItem/ListItem';
-import Aliases from '../Aliases/Aliases';
+import Aliases from '../../molecules/Aliases/Aliases';
 import './style.scss';
 
 interface Props {

@@ -10,8 +10,9 @@ import FormGroup from '../src/components/atoms/formGroup/FormGroup';
 import Label from './components/atoms/label/Label';
 import { formatDate } from './converters/date';
 import Characters from './containers/Characters/Characters';
-import ChararacterListItem from './components/molecules/CharaterListItem/CharaterListItem';
+import ChararacterListItem from './components/organisms/CharaterListItem/CharaterListItem';
 import { parseAliases } from './converters/aliases';
+import Selector from './components/atoms/selector/Selector'
 
 const App = () => {
 
@@ -51,12 +52,27 @@ const App = () => {
             (props: FormikProps<FormValues>) => {
                return (
                   <FormGroup>
-                     <Label text="Email" />
+                     <Label text="Email" forInput="email" />
                      <Input
                         type="text"
                         placeholder="Email"
                         name="email"
                         invalid={props.errors.email && props.touched.email}
+                     />
+                     <Selector<string>
+                        name="animals"
+                        options={
+                           [
+                              'wolf',
+                              'lion',
+                              'seal',
+                              'parrot',
+                              'squirrel',
+                              'dog',
+                              'cat'
+                           ]
+                        }
+                        labelText="Animals"
                      />
                      <div style={{ maxWidth: '500px' }}>
                         {

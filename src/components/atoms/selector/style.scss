@@ -1,0 +1,35 @@
+@import "../../../styles/settings.scss";
+@import "../../../styles/tools.scss";
+
+.selector {
+    &__inputWrapper {
+        position: relative;
+    }
+
+    &__arrow {
+        position: absolute;
+        transform: translateY(-50%);
+        top: 4.8rem;
+        right: 0.8rem;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        vertical-align: top;
+    }
+
+    &__arrow--open {
+        @extend .selector__arrow;
+        transform: rotate(-180deg);
+        top: 3.6rem;
+    }
+
+    &__suggestions {
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+        padding: 1.2rem;
+        color: $richBlack;
+        font-family: $lato;
+        margin-top: 0.2rem;
+        border-radius: 6px;
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+}
