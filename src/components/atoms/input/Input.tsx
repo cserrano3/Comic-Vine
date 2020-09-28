@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { useField } from 'formik';
 import './styles.scss';
 
@@ -11,7 +11,9 @@ interface Props {
   className?: string;
   placeholder?: string;
   invalid?: boolean;
-  onChange?: (event: React.ChangeEvent) => void,
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -21,7 +23,9 @@ export default function Input({
   invalid = false,
   className = '',
   placeholder = '',
-  onChange
+  onChange,
+  onBlur,
+  onFocus,
 }: Props) {
 
   const [field] = useField({ name, type });
@@ -31,6 +35,15 @@ export default function Input({
     { onChange && onChange(event) }
   };
 
+  const triggerOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    field.onBlur(event);
+    { onBlur && onBlur(event) }
+  };
+
+  const triggerOnFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
+    onFocus(event);
+  }, [onFocus])
+
   return (
     <input
       onChange={triggerOnChange}
@@ -38,7 +51,9 @@ export default function Input({
       type={type}
       disabled={disabled}
       placeholder={placeholder}
+      onBlur={triggerOnBlur}
       name={name}
+      onFocus={triggerOnFocus}
       className={`input ${invalid ?
         'input--invalid' : ''} ${className}`} />
   );

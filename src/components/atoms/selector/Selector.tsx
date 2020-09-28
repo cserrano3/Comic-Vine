@@ -13,6 +13,8 @@ interface Props<T> {
   labelText: string;
 }
 
+//TODO: Fix onBlur bug to toggle off the list when the user clicks on the arrow
+
 export default function Selector<T>({
   options,
   onChange,
@@ -34,7 +36,8 @@ export default function Selector<T>({
 
   const onToggleList = React.useCallback(() => {
     toggleList(!isListOpen)
-  }, [isListOpen]);
+  }, [isListOpen]);;
+
 
   return (
     <div className="selector__wrapper">
@@ -43,6 +46,8 @@ export default function Selector<T>({
         <Input
           type="text"
           name={name}
+          onBlur={onToggleList}
+          onFocus={onToggleList}
         />
         <i
           className={`material-icons
