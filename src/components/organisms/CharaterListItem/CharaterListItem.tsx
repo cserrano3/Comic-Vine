@@ -23,7 +23,6 @@ export default function ChararacterListItem({
   realName,
   birth
 }: Props) {
-  console.log(aliases.length)
   return (
     <ListItem className="character-list-item">
       <Avatar imageURL={imageURL} alt={name} size="small" className="character-list-item__avatar" />

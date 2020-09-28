@@ -53,12 +53,10 @@ app.get('/get-character-by-name', function (req, res) {
                 message: 'Result not found'
             });
         } else {
-            console.log('response ----------- ', response)
             res.status(200).send(response.data);
         }
 
     }).catch((error) => {
-        console.log('error ----------- ', error)
         res.status(500).send({
             errorMessage: error.error,
             statusCode: error.status_code

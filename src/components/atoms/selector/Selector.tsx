@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../input/Input';
 import Label from '../label/Label';
+import { useField } from 'formik';
 import './style.scss';
 
 interface Props<T> {
@@ -21,6 +22,15 @@ export default function Selector<T>({
 }: Props<T>) {
 
   const [isListOpen, toggleList] = React.useState<boolean>(false);
+
+  const [field, meta, helpers] = useField({
+    name
+  });
+
+  const onSelectValue = React.useCallback((option: T) => {
+    helpers.setValue(option)
+    toggleList(!isListOpen)
+  }, [options, isListOpen])
 
   const onToggleList = React.useCallback(() => {
     toggleList(!isListOpen)
@@ -47,7 +57,9 @@ export default function Selector<T>({
             {
               options.map(option => {
                 return (
-                  <li className="selector__option">
+                  <li className="selector__option" onClick={() => {
+                    onSelectValue(option)
+                  }}>
                     {option}
                   </li>
                 )

@@ -14,22 +14,30 @@
         transition: all 0.2s ease-in-out;
         cursor: pointer;
         vertical-align: top;
-    }
 
-    &__arrow--open {
-        @extend .selector__arrow;
-        transform: rotate(-180deg);
-        top: 3.6rem;
+        &--open {
+            @extend .selector__arrow;
+            transform: rotate(-180deg);
+            top: 3.6rem;
+        }
     }
 
     &__suggestions {
         box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-        padding: 1.2rem;
         color: $richBlack;
         font-family: $lato;
         margin-top: 0.2rem;
         border-radius: 6px;
         max-height: 200px;
         overflow-y: scroll;
+    }
+
+    &__option {
+        padding: 0.8rem 1.2rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $lightestGray;
+        }
     }
 }

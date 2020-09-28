@@ -30,8 +30,6 @@ const App = () => {
 
    React.useEffect(() => {
       getCharaterByName("batman", 10, 0).then(result => {
-         console.log('result ---------- ', result)
-         console.log(result.data.results[0])
          setCharacter(result.data.results[0])
       });
 

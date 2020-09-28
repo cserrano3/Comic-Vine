@@ -4,6 +4,7 @@ import './styles.scss';
 
 interface Props {
   type: string;
+  value?: string;
   required?: boolean;
   disabled?: boolean;
   name: string;
@@ -27,7 +28,7 @@ export default function Input({
 
   const triggerOnChange = (event: React.ChangeEvent) => {
     field.onChange(event);
-    onChange(event)
+    { onChange && onChange(event) }
   };
 
   return (
