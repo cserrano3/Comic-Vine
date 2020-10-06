@@ -26,6 +26,7 @@ const App = () => {
    interface FormValues {
       email: string,
       favorite: false
+      animals: string
    }
 
    React.useEffect(() => {
@@ -41,13 +42,14 @@ const App = () => {
       <p>{character && DOMPurify.sanitize(character?.aliases)}</p>
       <Characters />
       <Formik
-         initialValues={{ email: '', favorite: false }}
+         initialValues={{ email: '', favorite: false, animals: '' }}
          onSubmit={(values) => {
             console.log(values);
          }}
          validationSchema={validationSchema}>
          {
             (props: FormikProps<FormValues>) => {
+               console.log('props ------- ', props)
                return (
                   <FormGroup>
                      <Label text="Email" forInput="email" />

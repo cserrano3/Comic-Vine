@@ -1390,6 +1390,13 @@
   dependencies:
     "@types/lodash" "*"
 
+"@types/lodash.deburr@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@types/lodash.deburr/-/lodash.deburr-4.1.6.tgz#18b3bebd941c4b622cd2278fed18017dfc32ce3f"
+  integrity sha512-LsdZUIBM/YDQ4+w4/PSq2KTRRuCmBic48vzzKD7PHw1uIsKMWizwDtk0fMdqYmo9/iLMhHiFh2ol0eqhjT0VTg==
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash@*":
   version "4.14.158"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.158.tgz#b38ea8b6fe799acd076d7a8d7ab71c26ef77f785"
@@ -5427,6 +5434,11 @@ lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.deburr@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.deburr/-/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
+  integrity sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
 
 lodash.isplainobject@^4.0.6:
   version "4.0.6"

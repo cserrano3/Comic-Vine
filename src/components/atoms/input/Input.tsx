@@ -26,34 +26,22 @@ export default function Input({
   onChange,
   onBlur,
   onFocus,
+  value
 }: Props) {
 
   const [field] = useField({ name, type });
 
-  const triggerOnChange = (event: React.ChangeEvent) => {
-    field.onChange(event);
-    { onChange && onChange(event) }
-  };
-
-  const triggerOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    field.onBlur(event);
-    { onBlur && onBlur(event) }
-  };
-
-  const triggerOnFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-    onFocus(event);
-  }, [onFocus])
 
   return (
     <input
-      onChange={triggerOnChange}
-      value={field.value}
+      onChange={onChange}
+      value={value}
       type={type}
       disabled={disabled}
       placeholder={placeholder}
-      onBlur={triggerOnBlur}
+      onBlur={onBlur}
       name={name}
-      onFocus={triggerOnFocus}
+      onFocus={onFocus}
       className={`input ${invalid ?
         'input--invalid' : ''} ${className}`} />
   );

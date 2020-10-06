@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../input/Input';
 import Label from '../label/Label';
 import { useField } from 'formik';
+import deburr from 'lodash.deburr';
 import './style.scss';
 
 interface Props<T> {
@@ -13,8 +14,6 @@ interface Props<T> {
   labelText: string;
 }
 
-//TODO: Fix onBlur bug to toggle off the list when the user clicks on the arrow
-
 export default function Selector<T>({
   options,
   onChange,
@@ -25,19 +24,32 @@ export default function Selector<T>({
 
   const [isListOpen, toggleList] = React.useState<boolean>(false);
 
-  const [field, meta, helpers] = useField({
+  const [filteredOptions, setFilteredOptions] = React.useState<Array<T>>(options);
+
+  const [field, _, helpers] = useField({
     name
   });
 
-  const onSelectValue = React.useCallback((option: T) => {
-    helpers.setValue(option)
+  const onSelectValue = React.useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+    helpers.setValue(event.currentTarget?.innerText)
     toggleList(!isListOpen)
-  }, [options, isListOpen])
+  }, [filteredOptions, isListOpen])
 
   const onToggleList = React.useCallback(() => {
     toggleList(!isListOpen)
-  }, [isListOpen]);;
+  }, [isListOpen]);
 
+  const onFilterValue = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const input = e.target.value;
+    helpers.setValue(input)
+
+    setFilteredOptions(options.filter(option => {
+      return String(option).startsWith(input);
+    }));
+
+    toggleList(true);
+  }, [options]);
 
   return (
     <div className="selector__wrapper">
@@ -46,8 +58,9 @@ export default function Selector<T>({
         <Input
           type="text"
           name={name}
-          onBlur={onToggleList}
+          onChange={onFilterValue}
           onFocus={onToggleList}
+          value={field.value}
         />
         <i
           className={`material-icons
@@ -60,12 +73,12 @@ export default function Selector<T>({
         isListOpen ? (
           <ul className="selector__suggestions">
             {
-              options.map(option => {
+              filteredOptions.map(option => {
                 return (
-                  <li className="selector__option" onClick={() => {
-                    onSelectValue(option)
-                  }}>
-                    {option}
+                  <li className="selector__option" onClick={
+                    onSelectValue
+                  }>
+                    { option}
                   </li>
                 )
               })
@@ -73,8 +86,6 @@ export default function Selector<T>({
           </ul>
         ) : null
       }
-
     </div >
-  )
-
+  );
 }
