@@ -7,7 +7,6 @@ import './style.scss';
 
 interface Props<T> {
   options: Array<T>;
-  onChange?: (value: T) => void;
   onInput?: (event: React.ChangeEvent) => void;
   disabled?: boolean;
   name: string;
@@ -16,7 +15,6 @@ interface Props<T> {
 
 export default function Selector<T>({
   options,
-  onChange,
   name,
   labelText,
   disabled = false
@@ -44,9 +42,11 @@ export default function Selector<T>({
     const input = e.target.value;
     helpers.setValue(input)
 
-    setFilteredOptions(options.filter(option => {
-      return String(option).startsWith(input);
-    }));
+    const filteredOptions = options.filter(option => {
+      return String(option).toLowerCase().startsWith(deburr(input.toLowerCase()));
+    });
+
+    setFilteredOptions(filteredOptions);
 
     toggleList(true);
   }, [options]);
