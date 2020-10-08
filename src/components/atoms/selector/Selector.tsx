@@ -61,6 +61,7 @@ export default function Selector<T>({
           onChange={onFilterValue}
           onFocus={onToggleList}
           value={field.value}
+          disabled={disabled}
         />
         <i
           className={`material-icons
@@ -78,10 +79,15 @@ export default function Selector<T>({
                   <li className="selector__option" onClick={
                     onSelectValue
                   }>
-                    { option}
+                    {option}
                   </li>
                 )
               })
+            }
+            {!filteredOptions.length &&
+              <li className="selector__option" onClick={
+                onSelectValue
+              }>Not found</li>
             }
           </ul>
         ) : null

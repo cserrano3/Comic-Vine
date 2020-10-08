@@ -1,5 +1,4 @@
-import React, { HTMLAttributes } from 'react';
-import { useField } from 'formik';
+import React from 'react';
 import './styles.scss';
 
 interface Props {
@@ -28,9 +27,6 @@ export default function Input({
   onFocus,
   value
 }: Props) {
-
-  const [field] = useField({ name, type });
-
 
   return (
     <input
