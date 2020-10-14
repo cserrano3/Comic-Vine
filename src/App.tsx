@@ -10,9 +10,10 @@ import FormGroup from '../src/components/atoms/formGroup/FormGroup';
 import Label from './components/atoms/label/Label';
 import { formatDate } from './converters/date';
 import Characters from './containers/Characters/Characters';
-import ChararacterListItem from './components/organisms/CharaterListItem/CharaterListItem';
+import ChararacterListItem from './components/molecules/CharaterListItem/CharaterListItem';
 import { parseAliases } from './converters/aliases';
 import Selector from './components/atoms/selector/Selector'
+import CharacterList from './components/organisms/CharacterList/CharacterList';
 
 const App = () => {
 
@@ -40,7 +41,6 @@ const App = () => {
    return <div data-testid="app">
 
       <p>{character && DOMPurify.sanitize(character?.aliases)}</p>
-      <Characters />
       <Formik
          initialValues={{ email: '', favorite: false, animals: '' }}
          onSubmit={(values) => {
@@ -49,9 +49,10 @@ const App = () => {
          validationSchema={validationSchema}>
          {
             (props: FormikProps<FormValues>) => {
-               console.log('props ------- ', props)
                return (
                   <FormGroup>
+                     <CharacterList />
+
                      <Label text="Email" forInput="email" />
                      <Input
                         type="text"
@@ -74,18 +75,6 @@ const App = () => {
                         }
                         labelText="Animals"
                      />
-                     <div style={{ maxWidth: '500px' }}>
-                        {
-                           character && <ChararacterListItem
-                              imageURL={character.image.medium_url}
-                              name={character.name}
-                              birth={formatDate(character.birth)}
-                              realName={character.real_name}
-                              gender={character.gender}
-                              aliases={parseAliases(character.aliases)}
-                           />
-                        }
-                     </div>
 
 
                   </FormGroup>

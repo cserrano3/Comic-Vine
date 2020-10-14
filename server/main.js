@@ -26,7 +26,7 @@ app.get('/get-characters', function (req, res) {
             'Content-Type': 'application/x-www-form-urlencoded',
         }
     }).then(response => {
-        res.status(200).send(response);
+        res.status(200).send(response.data);
     }).catch(error => {
         res.status(500).send(error);
     });

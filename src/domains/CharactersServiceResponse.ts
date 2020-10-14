@@ -7,5 +7,5 @@ export default interface CharacterServiceResponse {
   image: ImageServiceResponse;
   gender: number;
   name: string;
-  realName: string;
+  real_name: string;
 }

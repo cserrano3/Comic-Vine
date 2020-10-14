@@ -26,7 +26,7 @@ describe('Characters reducer', () => {
         imageTags: 'image',
       },
       "name": "Laura Dunham",
-      "realName": 'Laura',
+      "real_name": 'Laura',
 
     },
     {
@@ -65,7 +65,7 @@ describe('Characters reducer', () => {
         imageTags: 'image',
       },
       "name": "Sea Urchin",
-      "realName": "Jeremy Swimming Bear"
+      "real_name": "Jeremy Swimming Bear"
     }
   ];
 

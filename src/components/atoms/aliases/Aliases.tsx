@@ -1,5 +1,5 @@
 import React from 'react';
-import Separator from '../../atoms/separator/Separator';
+import Separator from '../separator/Separator';
 import './style.scss';
 
 interface Props {
@@ -10,7 +10,7 @@ export default function ({ aliases }: Props) {
   return (
     <>
       {
-        aliases.map(alias => {
+        aliases?.map(alias => {
           if (aliases.indexOf(alias) !== 2) {
             return (
               <span className="aliases">

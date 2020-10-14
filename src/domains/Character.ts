@@ -1,12 +1,13 @@
 import Image from './Image';
 
 export default interface Character {
-  aliases: Array<string>;
-  birth: string;
+  aliases?: Array<string>;
+  birth?: string;
+  avatarURL?: string;
   description?: string;
-  image: Image;
+  image?: Image;
   gender: string;
   name: string;
-  realName: string;
+  real_name: string;
   isFavorite?: boolean;
 }
