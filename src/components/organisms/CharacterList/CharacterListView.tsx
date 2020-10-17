@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import CharacterListItem from "../../molecules/CharaterListItem/CharaterListItem";
 import Character from "../../../domains/Character";
 
@@ -26,15 +27,16 @@ export default function CharacterList({
     threshold: 0.75,
   };
 
-  const intersectionObserverCallback = (
+  const intersectionObserverCallback = useCallback((
     entries: Array<IntersectionObserverEntry>
   ) => {
     const firstEntry = entries[0];
 
     if (firstEntry.isIntersecting) {
-      loadCharacters(offset.current + 10);
+      offset.current += CHARACTERS_PER_SCROLL;
+      loadCharacters(offset.current);
     }
-  };
+  }, [offset, loadCharacters]);
 
   const observer = useRef(
     new IntersectionObserver(intersectionObserverCallback, observerOptions)
