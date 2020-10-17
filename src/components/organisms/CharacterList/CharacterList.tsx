@@ -4,8 +4,6 @@ import { selectCharacters } from '../../../stateManagement/characters/selectors'
 import CharacterListItem from '../../molecules/CharaterListItem/CharaterListItem';
 import getAllCharacters from '../../../useCases/getAllCharacters/getAllCharacters';
 import Character from '../../../domains/Character';
-import { fireEvent } from '@testing-library/react';
-
 
 interface Props {
   characters?: Array<Character>;
@@ -23,8 +21,11 @@ export default function CharacterList({
 
   const observer = useRef(
     new IntersectionObserver(entries => {
-      console.log('entries -------- ', entries);
-      console.log('first entry ----------- ', entries[0])
+      const firstEntry = entries[0];
+
+      if(firstEntry.isIntersecting) {
+        loadMore();
+      }
 
     }, {
       threshold: 1
