@@ -1,93 +1,29 @@
-import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCharacters } from '../../../stateManagement/characters/selectors';
-import CharacterListItem from '../../molecules/CharaterListItem/CharaterListItem';
-import getAllCharacters from '../../../useCases/getAllCharacters/getAllCharacters';
-import Character from '../../../domains/Character';
+import React, {
+    useCallback,
+    useEffect,
+} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCharacters } from "../../../stateManagement/characters/selectors";
+import getAllCharacters from "../../../useCases/getAllCharacters/getAllCharacters";
+import CharacterListView from "./CharacterListView";
 
-interface Props {
-  characters?: Array<Character>;
-  markAsFavorite?: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+export default function CharacterList() {
+    const charactersList = useSelector(selectCharacters);
 
-export default function CharacterList({
-  characters,
-  markAsFavorite
-}: Props) {
+    const dispatch = useDispatch();
 
-  const [element, setElement] = useState(null);
+    const loadCharacters = useCallback(async (offset) => {
+        getAllCharacters(10, offset)(dispatch);
+    }, []);
 
-  const page = useRef(1);
+    useEffect(() => {
+        loadCharacters(10);
+    }, [loadCharacters]);
 
-  const observer = useRef(
-    new IntersectionObserver(entries => {
-      const firstEntry = entries[0];
-
-      if(firstEntry.isIntersecting) {
-        loadMore();
-      }
-
-    }, {
-      threshold: 1
-    }));
-
-  const dispatch = useDispatch();
-
-  const fetchCharacters = useCallback(async page => {
-    getAllCharacters(10, page.current)(dispatch)
-  }, []);
-
-  const handleInitial = useCallback(async page => {
-    await fetchCharacters(page);
-  }, [fetchCharacters])
-
-  const loadMore = useCallback(() => {
-    page.current = (page.current + 1) * 10;
-    handleInitial(page);
-  }, [handleInitial])
-
-  useEffect(() => {
-    handleInitial(10);
-  }, [handleInitial]);
-
-
-  useEffect(() => {
-
-    const currentObserver = observer.current;
-
-    const currentElement = element;
-
-
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-
-  }, [element, observer])
-
-  const charactersList = useSelector(selectCharacters);
-
-  return (
-    <>
-      {
-        charactersList.map(character => {
-          return <CharacterListItem
-            real_name={character.real_name}
-            avatarURL={character.image.iconURL}
-            aliases={character.aliases}
-            name={character.name}
-            gender={character.gender}
-            birth={character.birth}
-            markAsFavorite={markAsFavorite}
-          />
-        })
-      }
-      <button ref={setElement} onClick={loadMore}>Load More</button>
-    </>
-  )
+    return (
+        <CharacterListView
+            characters={charactersList}
+            loadCharacters={loadCharacters}
+        />
+    );
 }
