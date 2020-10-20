@@ -8,6 +8,7 @@ import React, {
 import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import CharacterListItem from "../../molecules/CharaterListItem/CharaterListItem";
 import Character from "../../../domains/Character";
+import './style.scss'
 
 interface Props {
   characters: Array<Character>;
@@ -58,21 +59,23 @@ export default function CharacterList({
   }, [element, observer]);
 
   return (
-    <>
-      {characters.map((character) => {
-        return (
-          <CharacterListItem
-            real_name={character.real_name}
-            avatarURL={character.image.iconURL}
-            aliases={character.aliases}
-            name={character.name}
-            gender={character.gender}
-            birth={character.birth}
-            markAsFavorite={markAsFavorite}
-          />
-        );
-      })}
-      <div ref={setElement}>Load More</div>
-    </>
+    <div className="character-list">
+      <div className="character-list__wrapper">
+        {characters.map((character) => {
+          return (
+            <CharacterListItem
+              real_name={character.real_name}
+              avatarURL={character.image.iconURL}
+              aliases={character.aliases}
+              name={character.name}
+              gender={character.gender}
+              birth={character.birth}
+              markAsFavorite={markAsFavorite}
+            />
+          );
+        })}
+        <div ref={setElement} className="interceptor"></div>
+      </div>
+    </div>
   );
 }
