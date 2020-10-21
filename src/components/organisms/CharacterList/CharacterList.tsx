@@ -13,6 +13,8 @@ const initialCharactersAmount = 0;
 export default function CharacterList() {
     const charactersList = useSelector(selectCharacters);
 
+    console.log('character list ------------ ', charactersList)
+
     const dispatch = useDispatch();
 
     const loadCharacters = useCallback(async (offset) => {

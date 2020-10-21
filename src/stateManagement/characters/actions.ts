@@ -13,7 +13,6 @@ import {
 import cloneDeep from 'lodash.clonedeep';
 import { mapGender } from '../../converters/mapGender';
 import CharacterServiceResponse from '../../domains/CharactersServiceResponse';
-import Character from '../../domains/Character';
 
 export function startFetching(status: InfiniteScrollStatus): CharactersActionTypes {
   return {
@@ -49,9 +48,16 @@ export function fetchingSuccess(
   };
 }
 
-export function getCharactersError(error: Error): CharactersActionTypes {
+export function fetchingError(status: InfiniteScrollStatus): CharactersActionTypes {
   return {
-    type: GET_CHARACTERS_ERROR,
-    payload: error
+    type: errorFetch,
+    payload: status
   };
 } 
+
+export function reachEnd(status: InfiniteScrollStatus): CharactersActionTypes {
+  return {
+    type: reachedEnd,
+    payload: status
+  }
+}
