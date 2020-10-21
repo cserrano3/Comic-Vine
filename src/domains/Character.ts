@@ -10,4 +10,5 @@ export default interface Character {
   name: string;
   real_name: string;
   isFavorite?: boolean;
+  id?: string;
 }

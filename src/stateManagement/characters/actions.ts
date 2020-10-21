@@ -1,27 +1,37 @@
+import { InfiniteScrollStatus } from './state';
 import { parseImages } from './../../converters/images';
 import { parseAliases } from './../../converters/aliases';
 import { formatDate } from './../../converters/date';
 import Error from '../../domains/Error';
 import {
   CharactersActionTypes,
-  GET_CHARACTERS,
-  GET_CHARACTERS_ERROR,
-  GET_CHARACTERS_SUCCESS
+  startFetch,
+  errorFetch,
+  reachedEnd,
+  fetchSuccess
 } from './actionTypes';
 import cloneDeep from 'lodash.clonedeep';
 import { mapGender } from '../../converters/mapGender';
 import CharacterServiceResponse from '../../domains/CharactersServiceResponse';
+import Character from '../../domains/Character';
 
-export function getCharacters(isLoading: boolean): CharactersActionTypes {
+export function startFetching(status: InfiniteScrollStatus): CharactersActionTypes {
   return {
-    type: GET_CHARACTERS,
-    payload: isLoading
+    type: startFetch,
+    payload: status
   };
 }
 
-export function getCharactersSuccess(characters: Array<CharacterServiceResponse>): CharactersActionTypes {
-  const newState = cloneDeep(characters);
-  const parsedCharacters = newState.map(character => ({
+export function fetchingSuccess(
+  payload: {
+    characters: Array<CharacterServiceResponse>;
+    offset: number;
+    status: string;
+  }): CharactersActionTypes {
+  
+  const newCharacters = cloneDeep(payload.characters);
+
+  const parsedCharacters = newCharacters.map(character => ({
     ...character,
     gender: mapGender(character?.gender),
     birth: character?.birth ? formatDate(character?.birth) : null,
@@ -30,8 +40,12 @@ export function getCharactersSuccess(characters: Array<CharacterServiceResponse>
   }));
 
   return {
-    type: GET_CHARACTERS_SUCCESS,
-    payload: parsedCharacters
+    type: fetchSuccess,
+    payload: {
+      characters: parsedCharacters,
+      offset: payload.offset,
+      status: payload.status
+    }
   };
 }
 
@@ -40,4 +54,4 @@ export function getCharactersError(error: Error): CharactersActionTypes {
     type: GET_CHARACTERS_ERROR,
     payload: error
   };
-}
+} 

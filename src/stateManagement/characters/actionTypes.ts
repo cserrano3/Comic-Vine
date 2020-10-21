@@ -1,23 +1,32 @@
 import Character from '../../domains/Character';
 import Error from '../../domains/Error';
 
-export const GET_CHARACTERS_SUCCESS = 'GET_CHARACTERS_SUCCESS';
-export const GET_CHARACTERS = 'GET_CHARACTERS';
-export const GET_CHARACTERS_ERROR = 'GET_CHARACTERS_ERROR';
+export const startFetch = "START_FETCH";
+export const fetchSuccess = "FETCH_SUCCESS";
+export const errorFetch = "FETCH_ERROR";
+export const reachedEnd = "REACHED_END";
 
-interface GetCharactersAction {
-  type: typeof GET_CHARACTERS;
-  payload: boolean;
+interface startFetch {
+  type: typeof startFetch;
+  payload: string;
 }
 
-interface GetCharactersSuccess {
-  type: typeof GET_CHARACTERS_SUCCESS;
-  payload: Array<Character>;
+interface errorFetch {
+  type: typeof errorFetch;
+  payload: string;
 }
 
-interface GetCharactersError {
-  type: typeof GET_CHARACTERS_ERROR;
-  payload: Error;
+interface reachedEnd {
+  type: typeof reachedEnd;
+  payload: string;
+}
+interface fetchSuccess {
+  type: typeof fetchSuccess;
+  payload: {
+    characters: Array<Character>;
+    offset: number;
+    status: string;
+  };
 }
 
-export type CharactersActionTypes = GetCharactersAction | GetCharactersSuccess | GetCharactersError;
+export type CharactersActionTypes = startFetch | errorFetch | reachedEnd | fetchSuccess;

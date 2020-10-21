@@ -20,7 +20,7 @@ app.get('/get-characters', function (req, res) {
 
     axios({
         method: 'get',
-        url: `${BASE_URL}&limit=${limit}&offset=${offset}&field_list=name,real_name,gender,aliases,birth,image&format=json`,
+        url: `${BASE_URL}&limit=${limit}&offset=${offset}&field_list=name,real_name,gender,aliases,birth,image,id&format=json`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',

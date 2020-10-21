@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Character from '../../../domains/Character';
 import Avatar from '../../atoms/avatar/Avatar';
 import Icon from '../../atoms/iconCheckbox/IconCheckbox';
@@ -19,12 +20,15 @@ export default function ChararacterListItem({
   name,
   real_name,
   birth,
+  id,
   markAsFavorite
 }: Props) {
   return (
     <ListItem className="character-list-item">
 
-      <Avatar imageURL={avatarURL} alt={name} size="small" className="character-list-item__avatar" />
+      <Link to={`/${id}`}>
+        <Avatar imageURL={avatarURL} alt={name} size="small" className="character-list-item__avatar" />
+      </Link>
 
       <div className="character-list-item__info-wrapper">
         <span className="character-list-item__name">{name}</span>

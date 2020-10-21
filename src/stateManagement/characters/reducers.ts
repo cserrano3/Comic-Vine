@@ -1,31 +1,38 @@
-import initialState, { CharactersState } from './state';
+import initialState, { CharactersState, idleStatus, InfiniteScrollStatus } from './state';
 
 import {
   CharactersActionTypes,
-  GET_CHARACTERS,
-  GET_CHARACTERS_ERROR,
-  GET_CHARACTERS_SUCCESS
+  fetchSuccess,
+  errorFetch,
+  startFetch,
+  reachedEnd
+  
 } from './actionTypes';
 
 export default function charactersReducer(state = initialState, action: CharactersActionTypes): CharactersState {
   switch (action.type) {
-    case GET_CHARACTERS:
+    case startFetch:
       return {
         ...state,
-        isLoading: action.payload
+        status: action.payload as InfiniteScrollStatus
       }
-    case GET_CHARACTERS_SUCCESS:
+    case fetchSuccess:
       return {
         ...state,
-        isLoading: false,
-        characters: [...state.characters, ...action.payload]
+        status: action.payload.status as InfiniteScrollStatus,
+        characters: [...state.characters, ...action.payload.characters],
+        offset: action.payload.offset
       }
-    case GET_CHARACTERS_ERROR:
+    case reachedEnd:
       return {
         ...state,
-        isLoading: false,
-        error: { ...action.payload }
-      };
+        status: action.payload as InfiniteScrollStatus
+      }
+    case errorFetch:
+      return {
+        ...state,
+        status: action.payload as InfiniteScrollStatus
+      }
     default:
       return state;
   }

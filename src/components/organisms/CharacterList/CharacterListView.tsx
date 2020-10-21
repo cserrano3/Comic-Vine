@@ -2,8 +2,6 @@ import React, {
   ChangeEvent,
   useCallback,
   useEffect,
-  useRef,
-  useState,
 } from "react";
 import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import CharacterListItem from "../../molecules/CharaterListItem/CharaterListItem";
@@ -21,42 +19,28 @@ export default function CharacterList({
   markAsFavorite,
   loadCharacters,
 }: Props) {
-  const [element, setElement] = useState(null);
-  const offset = useRef(1);
 
-  const observerOptions = {
-    threshold: 0.75,
-  };
 
-  const intersectionObserverCallback = useCallback((
-    entries: Array<IntersectionObserverEntry>
-  ) => {
-    const firstEntry = entries[0];
+  const observerNodeCallback = useCallback(node => {
+    if (node !== null) {
+      new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.intersectionRatio === 1) {
+              // dispatch action to start loading characters
 
-    if (firstEntry.isIntersecting) {
-      offset.current += CHARACTERS_PER_SCROLL;
-      loadCharacters(offset.current);
+            }
+          })
+        },
+        { threshold: 1 }
+      ).observe(node);
     }
-  }, [offset, loadCharacters]);
-
-  const observer = useRef(
-    new IntersectionObserver(intersectionObserverCallback, observerOptions)
-  );
+  }, [])
 
   useEffect(() => {
-    const currentObserver = observer.current;
-    const currentElement = element;
+    // if, state is loading, call loadCharacters here
+  }, [])
 
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [element, observer]);
 
   return (
     <div className="character-list">
@@ -64,6 +48,7 @@ export default function CharacterList({
         {characters.map((character) => {
           return (
             <CharacterListItem
+              id={character.id}
               real_name={character.real_name}
               avatarURL={character.image.iconURL}
               aliases={character.aliases}
@@ -74,7 +59,7 @@ export default function CharacterList({
             />
           );
         })}
-        <div ref={setElement} className="interceptor"></div>
+        <div ref={observerNodeCallback} className="interceptor"></div>
       </div>
     </div>
   );
