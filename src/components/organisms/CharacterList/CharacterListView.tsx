@@ -7,39 +7,47 @@ import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import CharacterListItem from "../../molecules/CharaterListItem/CharaterListItem";
 import Character from "../../../domains/Character";
 import './style.scss'
+import { InfiniteScrollStatus } from "../../../stateManagement/characters/state";
 
 interface Props {
   characters: Array<Character>;
   markAsFavorite?: (event: ChangeEvent<HTMLInputElement>) => void;
   loadCharacters: (offset?: number) => void;
+  startFetching: () => void;
+  scrollingStatus: InfiniteScrollStatus;
 }
 
 export default function CharacterList({
   characters,
   markAsFavorite,
   loadCharacters,
+  startFetching,
+  scrollingStatus
 }: Props) {
 
 
   const observerNodeCallback = useCallback(node => {
+    console.log('opoooooraaaaa')
     if (node !== null) {
       new IntersectionObserver(
         entries => {
           entries.forEach(entry => {
-            if (entry.intersectionRatio === 1) {
+            if (entry.intersectionRatio >= 0.75) {
               // dispatch action to start loading characters
-
+              startFetching();
             }
           })
         },
-        { threshold: 1 }
+        { threshold: 0.75 }
       ).observe(node);
     }
   }, [])
 
   useEffect(() => {
-    // if, state is loading, call loadCharacters here
-  }, [])
+    if (scrollingStatus === 'LOADING') {
+      loadCharacters(CHARACTERS_PER_SCROLL)
+    }
+  }, [scrollingStatus])
 
 
   return (

@@ -6,7 +6,7 @@ export function getAllCharactersService(limit: number, offset: number) {
     .then(response => {
       const { results, number_of_total_results, number_of_page_results } = response.data
       return {
-        results,
+      results,
         totalResults: number_of_total_results,
         resultsPerPage: number_of_page_results
       };
