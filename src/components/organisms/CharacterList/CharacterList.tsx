@@ -19,14 +19,16 @@ export default function CharacterList() {
 
     const dispatch = useDispatch();
 
-    const startFetch = useCallback(() => {
+    const startFetch = useCallback((isIntersecting) => {
         console.log('holy sheeet')
-        dispatch(startFetching("LOADING"))
+        if (isIntersecting) {
+            dispatch(startFetching("LOADING"))
+        }
     }, [])
 
     useEffect(() => {
         getAllCharacters(CHARACTERS_PER_SCROLL, currentOffset)(dispatch);
-    }, [scrollingStatus])
+    }, [scrollingStatus]) //sync isIntersecting as a depency to execute side effects
 
 
     return (

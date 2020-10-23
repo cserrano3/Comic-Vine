@@ -13,7 +13,7 @@ interface Props {
   characters: Array<Character>;
   markAsFavorite?: (event: ChangeEvent<HTMLInputElement>) => void;
   loadCharacters?: (offset?: number) => void;
-  startFetching: () => void;
+  startFetching: (isIntersecting: boolean) => void;
   scrollingStatus: InfiniteScrollStatus;
 }
 
@@ -32,11 +32,9 @@ export default function CharacterList({
         entries => {
           console.log('entries ---------- ', entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting) // TODO: it's necessaary to sync this rendering condition with the controller
 
-          if (entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting) {
-            console.log('test ----------')
-            // dispatch action to start loading characters
-            startFetching();
-          }
+          // dispatch action to start loading characters
+          startFetching(entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting);
+
 
         },
         { threshold: 0.8 }
