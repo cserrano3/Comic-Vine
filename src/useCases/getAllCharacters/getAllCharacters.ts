@@ -14,7 +14,7 @@ export default function getAllCharacters(limit: number, offset: number) {
         dispatch(fetchingSuccess({ 
           characters: response.results, 
           status: idleStatus,
-          offset: CHARACTERS_PER_SCROLL }))
+          offset: offset }))
         return response.results
       }).catch(() => {
         dispatch(fetchingError(errorStatus))

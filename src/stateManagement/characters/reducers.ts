@@ -8,6 +8,8 @@ import {
   reachedEnd
   
 } from './actionTypes';
+import { CHARACTERS_PER_SCROLL } from '../../helpers/constants';
+import cloneDeep from 'lodash.clonedeep';
 
 export default function charactersReducer(state = initialState, action: CharactersActionTypes): CharactersState {
   switch (action.type) {
@@ -17,12 +19,11 @@ export default function charactersReducer(state = initialState, action: Characte
         status: action.payload as InfiniteScrollStatus
       }
     case fetchSuccess:
-      return {
-        ...state,
-        status: action.payload.status as InfiniteScrollStatus,
-        characters: [...state.characters, ...action.payload.characters],
-        offset: action.payload.offset
-      }
+      const newState = cloneDeep(state)
+      newState.status = action.payload.status as InfiniteScrollStatus;
+      newState.characters = [...newState.characters, ...action.payload.characters];
+      newState.offset += CHARACTERS_PER_SCROLL
+      return newState
     case reachedEnd:
       return {
         ...state,

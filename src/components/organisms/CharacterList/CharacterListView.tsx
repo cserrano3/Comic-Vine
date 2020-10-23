@@ -12,7 +12,7 @@ import { InfiniteScrollStatus } from "../../../stateManagement/characters/state"
 interface Props {
   characters: Array<Character>;
   markAsFavorite?: (event: ChangeEvent<HTMLInputElement>) => void;
-  loadCharacters: (offset?: number) => void;
+  loadCharacters?: (offset?: number) => void;
   startFetching: () => void;
   scrollingStatus: InfiniteScrollStatus;
 }
@@ -27,27 +27,22 @@ export default function CharacterList({
 
 
   const observerNodeCallback = useCallback(node => {
-    console.log('opoooooraaaaa')
     if (node !== null) {
       new IntersectionObserver(
         entries => {
-          entries.forEach(entry => {
-            if (entry.intersectionRatio >= 0.75) {
-              // dispatch action to start loading characters
-              startFetching();
-            }
-          })
+          console.log('entries ---------- ', entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting) // TODO: it's necessaary to sync this rendering condition with the controller
+
+          if (entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting) {
+            console.log('test ----------')
+            // dispatch action to start loading characters
+            startFetching();
+          }
+
         },
-        { threshold: 0.75 }
+        { threshold: 0.8 }
       ).observe(node);
     }
   }, [])
-
-  useEffect(() => {
-    if (scrollingStatus === 'LOADING') {
-      loadCharacters(CHARACTERS_PER_SCROLL)
-    }
-  }, [scrollingStatus])
 
 
   return (
