@@ -1,3 +1,4 @@
+import throttle from "lodash.throttle";
 import React, {
     useCallback,
     useEffect,
@@ -6,7 +7,7 @@ import React, {
 import { useSelector, useDispatch } from "react-redux";
 import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import { startFetching } from "../../../stateManagement/characters/actions";
-import { selectCharacters, selectScrollStatus } from "../../../stateManagement/characters/selectors";
+import { selectCharacters, selectScrollStatus, selectCurrentOffset } from "../../../stateManagement/characters/selectors";
 import getAllCharacters from "../../../useCases/getAllCharacters/getAllCharacters";
 import CharacterListView from "./CharacterListView";
 
@@ -15,21 +16,17 @@ const initialCharactersAmount = 0;
 export default function CharacterList() {
     const charactersList = useSelector(selectCharacters);
     const scrollingStatus = useSelector(selectScrollStatus);
-    const currentOffset = useSelector(state => state.characters.offset)
+    const currentOffset = useSelector(selectCurrentOffset);
 
     const dispatch = useDispatch();
 
-    const startFetch = useCallback((isIntersecting) => {
-        console.log('holy sheeet')
-        if (isIntersecting) {
-            dispatch(startFetching("LOADING"))
-        }
-    }, [])
+    const startFetch = useCallback(() => {
+        dispatch(startFetching("LOADING"))
+    }, [startFetching])
 
     useEffect(() => {
-        getAllCharacters(CHARACTERS_PER_SCROLL, currentOffset)(dispatch);
-    }, [scrollingStatus]) //sync isIntersecting as a depency to execute side effects
-
+        throttle(() => getAllCharacters(CHARACTERS_PER_SCROLL, currentOffset)(dispatch), 1.5)();
+    }, [scrollingStatus])
 
     return (
         <CharacterListView

@@ -7,3 +7,7 @@ export const selectCharacters = (state: RootState) => {
 export const selectScrollStatus = (state: RootState) => {
   return state.characters.status;
 }
+
+export const selectCurrentOffset = (state: RootState) => {
+  return state.characters.offset
+}

@@ -1,9 +1,8 @@
 import React, {
   ChangeEvent,
   useCallback,
-  useEffect,
+  useRef,
 } from "react";
-import { CHARACTERS_PER_SCROLL } from '../../../helpers/constants';
 import CharacterListItem from "../../molecules/CharaterListItem/CharaterListItem";
 import Character from "../../../domains/Character";
 import './style.scss'
@@ -13,38 +12,35 @@ interface Props {
   characters: Array<Character>;
   markAsFavorite?: (event: ChangeEvent<HTMLInputElement>) => void;
   loadCharacters?: (offset?: number) => void;
-  startFetching: (isIntersecting: boolean) => void;
+  startFetching: (isIntersecting?: boolean) => void;
   scrollingStatus: InfiniteScrollStatus;
 }
 
 export default function CharacterList({
   characters,
   markAsFavorite,
-  loadCharacters,
   startFetching,
-  scrollingStatus
 }: Props) {
 
+  const listRef = useRef(null)
 
   const observerNodeCallback = useCallback(node => {
     if (node !== null) {
       new IntersectionObserver(
         entries => {
-          console.log('entries ---------- ', entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting) // TODO: it's necessaary to sync this rendering condition with the controller
-
-          // dispatch action to start loading characters
-          startFetching(entries[0].intersectionRatio > 0.9 && entries[0].isIntersecting);
-
+          if (entries[0].intersectionRatio >= 0.75 && entries[0].boundingClientRect.y > (listRef.current.offsetHeight - 20)) {
+            startFetching();
+          }
 
         },
-        { threshold: 0.8 }
+        { threshold: 0.75 }
       ).observe(node);
     }
   }, [])
 
 
   return (
-    <div className="character-list">
+    <div className="character-list" ref={listRef}>
       <div className="character-list__wrapper">
         {characters.map((character) => {
           return (
